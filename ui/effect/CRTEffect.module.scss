@@ -1,0 +1,150 @@
+.crt {
+  position: relative;
+  overflow: hidden;
+  background: #020617;
+  isolation: isolate;
+}
+
+.crt::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 14;
+  background: linear-gradient(
+    115deg,
+    rgba(255, 255, 255, 0.12) 0%,
+    transparent 28%,
+    transparent 70%,
+    rgba(255, 255, 255, 0.06) 100%
+  );
+  opacity: 0.35;
+  mix-blend-mode: screen;
+}
+.content {
+  position: relative;
+  z-index: 1;
+  filter: contrast(1.08) saturate(1.15);
+}
+
+/* 横向扫描线 */
+.scanlines {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  opacity: 0.18;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.16) 0px,
+    rgba(255, 255, 255, 0.16) 1px,
+    transparent 1px,
+    transparent 4px
+  );
+  mix-blend-mode: overlay;
+}
+
+/* RGB 荧光点/子像素感 */
+.phosphor {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 11;
+  opacity: 0.12;
+  background-image: repeating-linear-gradient(
+    to right,
+    rgba(255, 0, 0, 0.35) 0px,
+    rgba(255, 0, 0, 0.35) 1px,
+    rgba(0, 255, 0, 0.25) 1px,
+    rgba(0, 255, 0, 0.25) 2px,
+    rgba(0, 80, 255, 0.35) 2px,
+    rgba(0, 80, 255, 0.35) 3px,
+    transparent 3px,
+    transparent 6px
+  );
+  mix-blend-mode: screen;
+}
+
+/* 暗角 + 中央亮 */
+.vignette {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 12;
+  background: radial-gradient(
+    circle at center,
+    transparent 0%,
+    transparent 52%,
+    rgba(0, 0, 0, 0.36) 100%
+  );
+}
+
+/* 微闪烁 */
+.flicker {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 13;
+  background: rgba(255, 255, 255, 0.035);
+  mix-blend-mode: overlay;
+  animation: crtFlicker 0.12s infinite steps(1);
+}
+
+/* 强度 */
+.low .scanlines {
+  opacity: 0.1;
+}
+
+.low .phosphor {
+  opacity: 0.06;
+}
+
+.low .content {
+  filter: contrast(1.03) saturate(1.08);
+}
+
+.medium .scanlines {
+  opacity: 0.18;
+}
+
+.medium .phosphor {
+  opacity: 0.12;
+}
+
+.high .scanlines {
+  opacity: 0.28;
+}
+
+.high .phosphor {
+  opacity: 0.2;
+}
+
+.high .content {
+  filter: contrast(1.18) saturate(1.25);
+}
+
+@keyframes crtFlicker {
+  0% {
+    opacity: 0.04;
+  }
+
+  20% {
+    opacity: 0.018;
+  }
+
+  40% {
+    opacity: 0.05;
+  }
+
+  60% {
+    opacity: 0.026;
+  }
+
+  80% {
+    opacity: 0.045;
+  }
+
+  100% {
+    opacity: 0.025;
+  }
+}

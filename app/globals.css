@@ -1,0 +1,315 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@keyframes blog-dots-out {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  67% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.15);
+  }
+}
+
+@keyframes blog-dots-in {
+  0% {
+    opacity: 0;
+    transform: scale(1.15);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes orbitRotateOuter {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes orbitRotateInner {
+  from {
+    transform: rotate(-35deg);
+  }
+  to {
+    transform: rotate(-395deg);
+  }
+}
+
+@keyframes breathe {
+  0% {
+    transform: scale(0.88);
+    opacity: 0.55;
+  }
+  50% {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.88);
+    opacity: 0.55;
+  }
+}
+
+.glitch-page {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  background: black;
+}
+
+.glitch-content {
+  position: relative;
+  z-index: 1;
+  animation: glitchPageShake 5s infinite steps(1);
+}
+
+/* RGB 色差层 */
+.glitch-rgb {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  mix-blend-mode: screen;
+  opacity: 0;
+}
+
+.glitch-rgb-red {
+  background: rgba(255, 0, 0, 0.08);
+  animation: glitchRedShift 4s infinite steps(1);
+}
+
+.glitch-rgb-blue {
+  background: rgba(0, 120, 255, 0.08);
+  animation: glitchBlueShift 4.3s infinite steps(1);
+}
+
+/* 扫描线 */
+.glitch-scanlines {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  opacity: 0.16;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.12) 0px,
+    rgba(255, 255, 255, 0.12) 1px,
+    transparent 1px,
+    transparent 4px
+  );
+}
+
+/* 横向撕裂条 */
+.glitch-tear {
+  pointer-events: none;
+  position: fixed;
+  left: 0;
+  z-index: 40;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.08);
+  opacity: 0;
+  mix-blend-mode: screen;
+}
+
+.glitch-tear-1 {
+  top: 24%;
+  height: 18px;
+  animation: glitchTearOne 3.6s infinite steps(1);
+}
+
+.glitch-tear-2 {
+  top: 61%;
+  height: 10px;
+  animation: glitchTearTwo 5.2s infinite steps(1);
+}
+
+/* 强度控制 */
+.glitch-page-low .glitch-content {
+  animation-duration: 8s;
+}
+
+.glitch-page-low .glitch-rgb {
+  opacity: 0.35;
+}
+
+.glitch-page-medium .glitch-rgb {
+  opacity: 0.6;
+}
+
+.glitch-page-high .glitch-content {
+  animation-duration: 2.6s;
+}
+
+.glitch-page-high .glitch-rgb {
+  opacity: 0.9;
+}
+
+.glitch-page-high .glitch-scanlines {
+  opacity: 0.24;
+}
+
+/* 页面轻微抖动 */
+@keyframes glitchPageShake {
+  0%,
+  88%,
+  100% {
+    transform: translate(0, 0);
+    filter: none;
+  }
+
+  89% {
+    transform: translate(1px, -1px);
+    filter: contrast(1.08) saturate(1.1);
+  }
+
+  90% {
+    transform: translate(-2px, 1px);
+  }
+
+  91% {
+    transform: translate(2px, 0);
+  }
+
+  92% {
+    transform: translate(0, 0);
+    filter: none;
+  }
+}
+
+/* 红色偏移 */
+@keyframes glitchRedShift {
+  0%,
+  82%,
+  100% {
+    opacity: 0;
+    transform: translate(0, 0);
+  }
+
+  83% {
+    opacity: 1;
+    transform: translate(3px, 0);
+  }
+
+  84% {
+    opacity: 0.4;
+    transform: translate(-2px, 1px);
+  }
+
+  85% {
+    opacity: 0;
+    transform: translate(0, 0);
+  }
+}
+
+/* 蓝色偏移 */
+@keyframes glitchBlueShift {
+  0%,
+  76%,
+  100% {
+    opacity: 0;
+    transform: translate(0, 0);
+  }
+
+  77% {
+    opacity: 1;
+    transform: translate(-3px, 0);
+  }
+
+  78% {
+    opacity: 0.5;
+    transform: translate(2px, -1px);
+  }
+
+  79% {
+    opacity: 0;
+    transform: translate(0, 0);
+  }
+}
+
+/* 撕裂条 1 */
+@keyframes glitchTearOne {
+  0%,
+  70%,
+  100% {
+    opacity: 0;
+    transform: translateX(0);
+  }
+
+  71% {
+    opacity: 1;
+    transform: translateX(-18px);
+  }
+
+  72% {
+    opacity: 0.4;
+    transform: translateX(12px);
+  }
+
+  73% {
+    opacity: 0;
+    transform: translateX(0);
+  }
+}
+
+/* 撕裂条 2 */
+@keyframes glitchTearTwo {
+  0%,
+  58%,
+  100% {
+    opacity: 0;
+    transform: translateX(0);
+  }
+
+  59% {
+    opacity: 1;
+    transform: translateX(24px);
+  }
+
+  60% {
+    opacity: 0.5;
+    transform: translateX(-10px);
+  }
+
+  61% {
+    opacity: 0;
+    transform: translateX(0);
+  }
+}

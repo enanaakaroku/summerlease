@@ -1,0 +1,389 @@
+.crt {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: #020617;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  min-height: 100%;
+  filter: contrast(1.08) saturate(1.12) brightness(0.98);
+  animation: contentMicroJitter 7s infinite steps(1);
+}
+
+/* 扫描线：持续向下滚动 */
+.scanlines {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  opacity: 0.2;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.14) 0px,
+    rgba(255, 255, 255, 0.14) 1px,
+    rgba(0, 0, 0, 0.08) 1px,
+    rgba(0, 0, 0, 0.08) 2px,
+    transparent 2px,
+    transparent 5px
+  );
+  background-size: 100% 6px;
+  animation: scanlineMove 0.7s linear infinite;
+  mix-blend-mode: overlay;
+}
+
+/* RGB 荧光点 / 子像素感 */
+.phosphor {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 21;
+  opacity: 0.11;
+  background-image: repeating-linear-gradient(
+    to right,
+    rgba(255, 0, 0, 0.42) 0px,
+    rgba(255, 0, 0, 0.42) 1px,
+    rgba(0, 255, 90, 0.3) 1px,
+    rgba(0, 255, 90, 0.3) 2px,
+    rgba(0, 120, 255, 0.42) 2px,
+    rgba(0, 120, 255, 0.42) 3px,
+    transparent 3px,
+    transparent 6px
+  );
+  mix-blend-mode: screen;
+}
+
+/* 横向撕裂条 */
+.tear {
+  pointer-events: none;
+  position: absolute;
+  left: -4%;
+  z-index: 30;
+  width: 108%;
+  opacity: 0;
+  background: rgba(255, 255, 255, 0.08);
+  mix-blend-mode: screen;
+  backdrop-filter: blur(1px);
+}
+
+.tearOne {
+  top: 22%;
+  height: 18px;
+  animation: tearOne 4.8s infinite steps(1);
+}
+
+.tearTwo {
+  top: 54%;
+  height: 9px;
+  animation: tearTwo 6.2s infinite steps(1);
+}
+
+.tearThree {
+  top: 76%;
+  height: 14px;
+  animation: tearThree 7.4s infinite steps(1);
+}
+
+/* 色差闪烁层 */
+.rgbShift {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 25;
+  opacity: 0;
+  mix-blend-mode: screen;
+}
+
+.rgbRed {
+  background: rgba(255, 0, 0, 0.08);
+  animation: redShift 5.2s infinite steps(1);
+}
+
+.rgbBlue {
+  background: rgba(0, 120, 255, 0.08);
+  animation: blueShift 5.7s infinite steps(1);
+}
+
+/* 暗角 */
+.vignette {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 0%,
+    transparent 42%,
+    rgba(0, 0, 0, 0.28) 72%,
+    rgba(0, 0, 0, 0.66) 100%
+  );
+}
+
+/* 玻璃高光 */
+.glass {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 45;
+  opacity: 0.25;
+  background: linear-gradient(
+    115deg,
+    rgba(255, 255, 255, 0.12) 0%,
+    transparent 24%,
+    transparent 68%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  mix-blend-mode: screen;
+}
+
+/* 屏幕亮度轻微闪烁 */
+.flicker {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  background: rgba(255, 255, 255, 0.04);
+  opacity: 0.025;
+  mix-blend-mode: overlay;
+  animation: flicker 0.12s infinite steps(1);
+}
+
+/* 强度 */
+.low .content {
+  filter: contrast(1.04) saturate(1.06) brightness(0.99);
+  animation-duration: 10s;
+}
+
+.low .scanlines {
+  opacity: 0.12;
+}
+
+.low .phosphor {
+  opacity: 0.06;
+}
+
+.low .flicker {
+  opacity: 0.014;
+}
+
+.medium .scanlines {
+  opacity: 0.2;
+}
+
+.medium .phosphor {
+  opacity: 0.11;
+}
+
+.high .content {
+  filter: contrast(1.18) saturate(1.25) brightness(0.94);
+  animation-duration: 4.8s;
+}
+
+.high .scanlines {
+  opacity: 0.28;
+}
+
+.high .phosphor {
+  opacity: 0.18;
+}
+
+.high .flicker {
+  opacity: 0.045;
+}
+
+.high .vignette {
+  background: radial-gradient(
+    ellipse at center,
+    transparent 0%,
+    transparent 36%,
+    rgba(0, 0, 0, 0.36) 68%,
+    rgba(0, 0, 0, 0.78) 100%
+  );
+}
+
+/* 扫描线向下走 */
+@keyframes scanlineMove {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: 0 6px;
+  }
+}
+
+/* 内容整体偶发微抖 */
+@keyframes contentMicroJitter {
+  0%,
+  82%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  83% {
+    transform: translate(1px, -1px);
+  }
+
+  84% {
+    transform: translate(-1px, 1px);
+  }
+
+  85% {
+    transform: translate(2px, 0);
+  }
+
+  86% {
+    transform: translate(0, 0);
+  }
+}
+
+/* 撕裂条动画 */
+@keyframes tearOne {
+  0%,
+  70%,
+  100% {
+    opacity: 0;
+    transform: translateX(0) scaleX(1);
+  }
+
+  71% {
+    opacity: 0.9;
+    transform: translateX(-26px) scaleX(1.02);
+  }
+
+  72% {
+    opacity: 0.35;
+    transform: translateX(18px) scaleX(0.98);
+  }
+
+  73% {
+    opacity: 0;
+    transform: translateX(0) scaleX(1);
+  }
+}
+
+@keyframes tearTwo {
+  0%,
+  52%,
+  100% {
+    opacity: 0;
+    transform: translateX(0) scaleX(1);
+  }
+
+  53% {
+    opacity: 0.75;
+    transform: translateX(34px) scaleX(0.96);
+  }
+
+  54% {
+    opacity: 0.28;
+    transform: translateX(-14px) scaleX(1.04);
+  }
+
+  55% {
+    opacity: 0;
+    transform: translateX(0) scaleX(1);
+  }
+}
+
+@keyframes tearThree {
+  0%,
+  88%,
+  100% {
+    opacity: 0;
+    transform: translateX(0) scaleX(1);
+  }
+
+  89% {
+    opacity: 0.65;
+    transform: translateX(-20px) scaleX(1.06);
+  }
+
+  90% {
+    opacity: 0.25;
+    transform: translateX(12px) scaleX(0.98);
+  }
+
+  91% {
+    opacity: 0;
+    transform: translateX(0) scaleX(1);
+  }
+}
+
+/* RGB 偶发偏移 */
+@keyframes redShift {
+  0%,
+  78%,
+  100% {
+    opacity: 0;
+    transform: translate(0, 0);
+  }
+
+  79% {
+    opacity: 0.8;
+    transform: translate(3px, 0);
+  }
+
+  80% {
+    opacity: 0.35;
+    transform: translate(-2px, 1px);
+  }
+
+  81% {
+    opacity: 0;
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes blueShift {
+  0%,
+  64%,
+  100% {
+    opacity: 0;
+    transform: translate(0, 0);
+  }
+
+  65% {
+    opacity: 0.75;
+    transform: translate(-3px, 0);
+  }
+
+  66% {
+    opacity: 0.32;
+    transform: translate(2px, -1px);
+  }
+
+  67% {
+    opacity: 0;
+    transform: translate(0, 0);
+  }
+}
+
+/* 快速亮度闪烁 */
+@keyframes flicker {
+  0% {
+    opacity: 0.024;
+  }
+
+  20% {
+    opacity: 0.012;
+  }
+
+  40% {
+    opacity: 0.04;
+  }
+
+  60% {
+    opacity: 0.018;
+  }
+
+  80% {
+    opacity: 0.035;
+  }
+
+  100% {
+    opacity: 0.02;
+  }
+}
