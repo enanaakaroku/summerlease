@@ -13,8 +13,8 @@ import Image from "next/image";
 import { useState } from "react";
 import HoverDotLineCard from "@/ui/card/HoverDotLineCard";
 import MosaicRevealCard from "@/ui/card/MosaicRevealCard";
-import HoverTiltShiftCard from "@/ui/card/HoverTiltShiftCard";
 import HoverTiltShiftGlitchCard from "@/ui/card/HoverTiltShiftGlitchCard";
+import MosaicRevealImage from "@/ui/image/MosaicRevealImage";
 
 const IMAGE_LIST = range(1, 10).map((n) => ({
   src: `/pic/bg${n}.png`,
@@ -35,18 +35,20 @@ export default function LinkImageScene() {
   return (
     <main className="flex flex-1 w-full max-w-3xl flex-wrap bg-white dark:bg-black sm:items-start">
       <TransitionLink href={activeImage.herf} className=" w-1/2">
-        <MosaicRevealCard rows={10} cols={10} triggerKey={activeImage.src}>
-          <HoverDotLineCard className="relative overflow-hidden aspect-square">
-            <Image
-              src={activeImage.src}
-              alt="t1.webp"
-              loading="eager"
-              fill
-              style={{ objectFit: "cover", objectPosition: "top" }}
-              sizes="(max-width: 768px) 100vw, 300px"
-            />
-          </HoverDotLineCard>
-        </MosaicRevealCard>
+        <HoverDotLineCard className="relative overflow-hidden aspect-square">
+          <MosaicRevealImage
+            src={activeImage.src}
+            alt=""
+            className="h-full w-full"
+            rows={32}
+            cols={32}
+            duration={0.9}
+            blur={16}
+            overlayColor="#000000"
+            overlayOpacity={0.18}
+            noise
+          />
+        </HoverDotLineCard>
       </TransitionLink>
       <TransitionLink href={activeImage.herf} className="group w-1/2">
         <HoverTiltShiftGlitchCard className="aspect-square">

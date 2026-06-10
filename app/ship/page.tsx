@@ -1,14 +1,13 @@
 import SpaceShipScene from "@/component/SpaceShipScene";
-import GlitchPageEffect from "@/ui/effect/GlitchPageEffect";
-import CRTEffect from "@/ui/effect/CRTEffect";
-import CRTDisplayEffect from "@/ui/effect/CRTDisplayEffect";
+import CrossGridCursorCanvas from "@/ui/canvas/CrossGridCursorCanvas";
 
 export default function Page() {
   return (
-    <CRTDisplayEffect intensity="medium">
-      <div className="h-screen">
-        <SpaceShipScene></SpaceShipScene>
+    <div className="h-screen relative">
+      <SpaceShipScene></SpaceShipScene>
+      <div className="absolute inset-0">
+        <CrossGridCursorCanvas></CrossGridCursorCanvas>
       </div>
-    </CRTDisplayEffect>
+    </div>
   );
 }

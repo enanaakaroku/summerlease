@@ -1,6 +1,7 @@
 import TransitionLink from "@/ui/link/TransitionLink";
 import WaveOrbitIcon from "@/ui/svg/WaveOrbitIcon";
 import { Michroma } from "next/font/google";
+import ScrambleText from "@/ui/text/ScrambleText";
 
 const michroma = Michroma({
   weight: "400",
@@ -16,9 +17,14 @@ export default function Header() {
         <WaveOrbitIcon></WaveOrbitIcon>
       </TransitionLink>
 
-      <TransitionLink href="/ship" className="ml-auto mr-4 underline">
-        SATELLITE
-      </TransitionLink>
+      <div className="ml-auto mr-4 flex gap-4">
+        <TransitionLink href="/blog" className="underline">
+          BLOG
+        </TransitionLink>
+        <TransitionLink href="/ship" className="underline">
+          <ScrambleText text="SATELLITE 卫星系统"></ScrambleText>
+        </TransitionLink>
+      </div>
     </div>
   );
 }
