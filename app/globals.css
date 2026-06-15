@@ -2,7 +2,7 @@
 @plugin "@tailwindcss/typography";
 
 :root {
-  --background: #ffffff;
+  --background: #fbfaee;
   --foreground: #171717;
 }
 
@@ -11,12 +11,15 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-avone: var(--font-avone);
+  --color-summer-gray: #2b292c;
+  --color-summer-white: #fbfaee;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
-    --foreground: #ededed;
+    --foreground: #fbfaee;
   }
 }
 

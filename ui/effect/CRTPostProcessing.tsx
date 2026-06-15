@@ -192,8 +192,12 @@ export default function CRTPostProcessing({
     }
   }, [size.width, size.height]);
 
-  useFrame((_, delta) => {
-    if (!enabled) return;
+  useFrame((state, delta) => {
+    if (!enabled) {
+      state.gl.render(state.scene, state.camera);
+      return;
+    }
+
     if (!composerRef.current || !shaderPassRef.current) return;
 
     shaderPassRef.current.uniforms.uTime.value += delta;

@@ -18,11 +18,14 @@ export default function Header() {
       </TransitionLink>
 
       <div className="ml-auto mr-4 flex gap-4">
+        <TransitionLink href="/portfolio" className="underline">
+          PORTFOLIO
+        </TransitionLink>
         <TransitionLink href="/blog" className="underline">
           BLOG
         </TransitionLink>
         <TransitionLink href="/ship" className="underline">
-          <ScrambleText text="SATELLITE 卫星系统"></ScrambleText>
+          <ScrambleText text="SATELLITE"></ScrambleText>
         </TransitionLink>
       </div>
     </div>

@@ -40,8 +40,8 @@ export default function LinkImageScene() {
             src={activeImage.src}
             alt=""
             className="h-full w-full"
-            rows={32}
-            cols={32}
+            rows={10}
+            cols={10}
             duration={0.9}
             blur={16}
             overlayColor="#000000"
